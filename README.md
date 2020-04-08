@@ -2,7 +2,7 @@
 This is a basic Android App written in Kotlin in UW course INFO 448.
 Author: Wayne Li
 
-Homework 1
+## Homework 1
 
 Completed the UI for music player screen as specified. 
 
