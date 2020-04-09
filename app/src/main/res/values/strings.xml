@@ -5,4 +5,8 @@
     <string name="album_img_desc">Album Picture for Ed Sheeran\'s Divide</string>
     <string name="song_title">Nancy Mulligan</string>
     <string name="song_artist">Ed Sheeran</string>
+    <string name="username_hint">Username</string>
+    <string name="skip_to_previous_track">Skip to previous track</string>
+    <string name="play_or_pause_current_song">Play or pause current song</string>
+    <string name="skip_to_next_track">Skip to next track</string>
 </resources>

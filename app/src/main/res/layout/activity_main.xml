@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,7 +37,9 @@
         app:layout_constraintTop_toTopOf="@+id/btnChangeUser"
         app:layout_constraintBottom_toBottomOf="@+id/btnChangeUser"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:autofillHints="Username"
+        android:hint="@string/username_hint"/>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barUserName"
@@ -45,8 +48,7 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="txtUserName, btnChangeUser, etUserName" />
 
-<!--Change this to image button-->
-    <ImageView
+    <ImageButton
         android:id="@+id/imgDivide"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -57,7 +59,9 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/barUserName" />
+        app:layout_constraintTop_toBottomOf="@id/barUserName"
+        android:background="@android:color/transparent"
+        android:foreground="?selectableItemBackground"/>
 
     <TextView
         android:id="@+id/txtSongTitle"
@@ -108,7 +112,8 @@
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
             android:src="@drawable/ic_skip_previous_black_24dp"
-            android:tint="@color/grey" />
+            android:tint="@color/grey"
+            android:contentDescription="@string/skip_to_previous_track" />
 
         <ImageView
             android:id="@+id/imgPlay"
@@ -116,7 +121,8 @@
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
             android:src="@drawable/ic_play_circle_filled_black_24dp"
-            android:tint="@color/grey" />
+            android:tint="@color/grey"
+            android:contentDescription="@string/play_or_pause_current_song" />
 
         <ImageView
             android:id="@+id/imgNext"
@@ -124,7 +130,8 @@
             android:layout_height="@dimen/button_size"
             android:layout_weight="1"
             android:src="@drawable/ic_skip_next_black_24dp"
-            android:tint="@color/grey" />
+            android:tint="@color/grey"
+            android:contentDescription="@string/skip_to_next_track" />
 
     </LinearLayout>
 
