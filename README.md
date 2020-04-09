@@ -13,9 +13,9 @@ Here is the preview of the app:
 
 Additionally, I implemented the following extra credit features:
 
-1. Not allow to change username if edit text field is empty
+1. Prohibit username change if edit text field is empty
 2. Long pressing img cover changes text color
-3. Utilize a barrier in ConstraintLayout
-4. All hardcoded strings, dimensions and colors and extracted to xml
+3. Utilizes a barrier and a guideline in ConstraintLayout
+4. All hardcoded strings, dimensions and colors are extracted to xml
 5. Album cover image is 1:1 with width matches the screen width
-6. Implement the app using another type of layout (Linear Layout)
+6. Implements the app using another type of layout (Linear Layout)
