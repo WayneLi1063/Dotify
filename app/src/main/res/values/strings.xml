@@ -9,4 +9,8 @@
     <string name="skip_to_previous_track">Skip to previous track</string>
     <string name="play_or_pause_current_song">Play or pause current song</string>
     <string name="skip_to_next_track">Skip to next track</string>
+    <string name="shuffle">SHUFFLE</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="number_plays">%d plays</string>
+    <string name="apply">APPLY</string>
 </resources>

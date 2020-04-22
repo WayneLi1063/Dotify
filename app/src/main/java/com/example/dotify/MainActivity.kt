@@ -1,6 +1,5 @@
 package com.example.dotify
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -14,13 +13,12 @@ class MainActivity : AppCompatActivity() {
 
     private var randomNumber = Random.nextInt(1000, 1000000000)
 
-    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val txtNumberplays = findViewById<TextView>(R.id.txtNumberPlays)
-        txtNumberplays.text = "$randomNumber plays"
+        val txtNumberPlays = findViewById<TextView>(R.id.txtNumberPlays)
+        txtNumberPlays.text = getString(R.string.number_plays).format(randomNumber)
 
         imgPrev.setOnClickListener {
             Toast.makeText(this, "Skipping to previous track", Toast.LENGTH_SHORT).show()
@@ -28,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         imgPlay.setOnClickListener {
             randomNumber += 1
-            txtNumberplays.text = "$randomNumber plays"
+            txtNumberPlays.text = getString(R.string.number_plays).format(randomNumber)
         }
 
         imgNext.setOnClickListener {
@@ -36,32 +34,41 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnChangeUser.setOnClickListener {
-            if (btnChangeUser.text == "CHANGE USER") {
-                val userName = txtUserName.text.toString()
-                txtUserName.visibility = View.INVISIBLE
-                btnChangeUser.text = "APPLY"
-                etUserName.setText(userName)
-                etUserName.visibility = View.VISIBLE
-            } else {
-                val newUserName = etUserName.text.toString()
-                if (newUserName.isNotEmpty()) {
-                    btnChangeUser.text = "CHANGE USER"
-                    etUserName.visibility = View.INVISIBLE
-                    txtUserName.text = newUserName
-                    txtUserName.visibility = View.VISIBLE
-                } else {
-                    Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_SHORT).show()
-                }
-            }
+            btnChangeUserSubmitClicked()
         }
 
         imgDivide.setOnLongClickListener {
-            val myColor = ContextCompat.getColor(this, R.color.blue)
-            txtNumberplays.setTextColor(myColor)
-            txtArtist.setTextColor(myColor)
-            txtSongTitle.setTextColor(myColor)
-            txtUserName.setTextColor(myColor)
+            imgDivideSubmitClicked(txtNumberPlays)
             return@setOnLongClickListener true
         }
     }
+
+    private fun btnChangeUserSubmitClicked() {
+        if (btnChangeUser.text == getString(R.string.change_user)) {
+            val userName = txtUserName.text.toString()
+            txtUserName.visibility = View.INVISIBLE
+            btnChangeUser.text = getString(R.string.apply)
+            etUserName.setText(userName)
+            etUserName.visibility = View.VISIBLE
+        } else {
+            val newUserName = etUserName.text.toString()
+            if (newUserName.isNotEmpty()) {
+                btnChangeUser.text = getString(R.string.change_user)
+                etUserName.visibility = View.INVISIBLE
+                txtUserName.text = newUserName
+                txtUserName.visibility = View.VISIBLE
+            } else {
+                Toast.makeText(this, "Username cannot be empty", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun imgDivideSubmitClicked(txtNumberPlays: TextView) {
+        val myColor = ContextCompat.getColor(this, R.color.blue)
+        txtNumberPlays.setTextColor(myColor)
+        txtArtist.setTextColor(myColor)
+        txtSongTitle.setTextColor(myColor)
+        txtUserName.setTextColor(myColor)
+    }
+
 }
