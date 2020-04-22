@@ -2,7 +2,7 @@
     <string name="app_name">Dotify</string>
     <string name="change_user">CHANGE USER</string>
     <string name="default_user_name">WayneLi1063</string>
-    <string name="album_img_desc">Album Picture for Ed Sheeran\'s Divide</string>
+    <string name="album_img_desc">Nancy Mulligan - Ed Sheeran</string>
     <string name="song_title">Nancy Mulligan</string>
     <string name="song_artist">Ed Sheeran</string>
     <string name="username_hint">Username</string>
@@ -13,4 +13,6 @@
     <string name="placeholder">Placeholder</string>
     <string name="number_plays">%d plays</string>
     <string name="apply">APPLY</string>
+    <string name="miniPlayer">%s - %s</string>
+    <string name="songRemoval">%s is removed.</string>
 </resources>

@@ -16,6 +16,7 @@
         app:layout_constraintBottom_toTopOf="@+id/miniPlayer"
         android:background="@color/linen"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_song"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,12 +31,17 @@
 
         <TextView
             android:id="@+id/txtMiniPlayer"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text=""
-            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="@string/placeholder"
+            android:maxLines="1"
+            android:ellipsize="end"
+            app:layout_constraintTop_toTopOf="@id/btnShuffle"
+            app:layout_constraintBottom_toBottomOf="@id/btnShuffle"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/btnShuffle"/>
+            app:layout_constraintRight_toLeftOf="@id/btnShuffle"
+            android:textSize="@dimen/default_text_size"
+            android:layout_margin="@dimen/margin_small"/>
 
         <Button
             android:id="@+id/btnShuffle"
