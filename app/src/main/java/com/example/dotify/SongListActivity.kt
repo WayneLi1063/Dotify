@@ -38,20 +38,23 @@ class SongListActivity : AppCompatActivity() {
             val newSongList = parentSongList.toMutableList()
             newSongList.shuffle()
             songListAdapter.shuffle(newSongList)
+            rvSongList.scrollToPosition(0)
         }
 
         txtMiniPlayer.setOnClickListener {
-            val currentSongList = songListAdapter.songList
-            if (currentSongPosition != -1) {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.putExtra(TITLE_KEY, currentSongList[currentSongPosition].title)
-                intent.putExtra(ARTIST_KEY, currentSongList[currentSongPosition].artist)
-                intent.putExtra(ALBUM_IMG_KEY, currentSongList[currentSongPosition].largeImageID)
-
-                startActivity(intent)
-            }
-
+            onMiniPlayClicked(songListAdapter)
         }
+    }
 
+    fun onMiniPlayClicked(songListAdapter: SongListAdapter) {
+        val currentSongList = songListAdapter.songList
+        if (currentSongPosition != -1) {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra(TITLE_KEY, currentSongList[currentSongPosition].title)
+            intent.putExtra(ARTIST_KEY, currentSongList[currentSongPosition].artist)
+            intent.putExtra(ALBUM_IMG_KEY, currentSongList[currentSongPosition].largeImageID)
+
+            startActivity(intent)
+        }
     }
 }

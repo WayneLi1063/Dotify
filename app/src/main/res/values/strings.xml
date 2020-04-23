@@ -11,6 +11,7 @@
     <string name="skip_to_next_track">Skip to next track</string>
     <string name="shuffle">SHUFFLE</string>
     <string name="placeholder">Placeholder</string>
+    <string name="long_placeholder">Plaaaaaaaaaaaaaceeeeeeeeeeeehooooooooldeeeeeeeerrrrrr</string>
     <string name="number_plays">%d plays</string>
     <string name="apply">APPLY</string>
     <string name="miniPlayer">%s - %s</string>

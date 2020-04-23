@@ -1,6 +1,7 @@
 package com.example.dotify
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         txtSongTitle.text = intent.getStringExtra(TITLE_KEY)
         txtArtist.text = intent.getStringExtra(ARTIST_KEY)
         imgDivide.setImageResource(intent.getIntExtra(ALBUM_IMG_KEY, -1))
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         imgPrev.setOnClickListener {
             Toast.makeText(this, "Skipping to previous track", Toast.LENGTH_SHORT).show()
@@ -77,6 +80,15 @@ class MainActivity : AppCompatActivity() {
         txtArtist.setTextColor(myColor)
         txtSongTitle.setTextColor(myColor)
         txtUserName.setTextColor(myColor)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            finish()
+            return true
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
 }
