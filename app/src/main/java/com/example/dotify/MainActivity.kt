@@ -1,10 +1,10 @@
 package com.example.dotify
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
@@ -13,12 +13,20 @@ class MainActivity : AppCompatActivity() {
 
     private var randomNumber = Random.nextInt(1000, 1000000000)
 
+    companion object {
+        const val TITLE_KEY = "TITLE_KEY"
+        const val ARTIST_KEY = "ARTIST_KEY"
+        const val ALBUM_IMG_KEY = "ALBUM_IMG_KEY"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val txtNumberPlays = findViewById<TextView>(R.id.txtNumberPlays)
         txtNumberPlays.text = getString(R.string.number_plays).format(randomNumber)
+        txtSongTitle.text = intent.getStringExtra(TITLE_KEY)
+        txtArtist.text = intent.getStringExtra(ARTIST_KEY)
+        imgDivide.setImageResource(intent.getIntExtra(ALBUM_IMG_KEY, -1))
 
         imgPrev.setOnClickListener {
             Toast.makeText(this, "Skipping to previous track", Toast.LENGTH_SHORT).show()

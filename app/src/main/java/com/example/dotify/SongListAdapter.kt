@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ericchee.songdataprovider.Song
 
-class SongListAdapter (private var songList: MutableList<Song>):
+class SongListAdapter(var songList: MutableList<Song>) :
     RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
 
-    var onSongClickListener: ((title: String, artist: String) -> Unit)? = null
+    var onSongClickListener: ((title: String, artist: String, position: Int) -> Unit)? = null
 
     var onSongLongClickListener: ((title: String, position: Int) -> Unit)? = null
 
@@ -34,7 +34,7 @@ class SongListAdapter (private var songList: MutableList<Song>):
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
         val song = songList[position]
-        holder.bind(song, position)
+        holder.bind(song)
     }
 
     inner class SongListViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -42,19 +42,19 @@ class SongListAdapter (private var songList: MutableList<Song>):
         private val txtListSongName by lazy { itemView.findViewById<TextView>(R.id.txtListSongName) }
         private val txtListArtistName by lazy { itemView.findViewById<TextView>(R.id.txtListArtistName) }
 
-        fun bind(song: Song, position: Int) {
+        fun bind(song: Song) {
             imgSongPreview.setImageResource(song.smallImageID)
             imgSongPreview.contentDescription = "${song.title} - ${song.artist}"
             txtListSongName.text = song.title
             txtListArtistName.text = song.artist
 
             itemView.setOnClickListener{
-                onSongClickListener?.invoke(song.title, song.artist)
+                onSongClickListener?.invoke(song.title, song.artist, adapterPosition)
             }
 
             itemView.setOnLongClickListener{
-                onSongLongClickListener?.invoke(song.title, position)
-                notifyItemChanged(position)
+                onSongLongClickListener?.invoke(song.title, adapterPosition)
+                notifyDataSetChanged()
                 return@setOnLongClickListener true
             }
         }
