@@ -12,9 +12,7 @@ import com.ericchee.songdataprovider.Song
 class SongListAdapter(var songList: MutableList<Song>) :
     RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
 
-    var onSongClickListener: ((title: String, artist: String, position: Int) -> Unit)? = null
-
-    var onSongLongClickListener: ((title: String, position: Int) -> Unit)? = null
+    var onSongClickListener: ((song: Song) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongListViewHolder {
         val itemSongView = LayoutInflater.from(parent.context).inflate(R.layout.item_song, parent, false)
@@ -26,10 +24,8 @@ class SongListAdapter(var songList: MutableList<Song>) :
     }
 
     fun shuffle(newSongList: MutableList<Song>) {
-        val callback = SongListDiffCallback(songList, newSongList)
-        val diffResult = DiffUtil.calculateDiff(callback)
-        diffResult.dispatchUpdatesTo(this)
         songList = newSongList
+        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: SongListViewHolder, position: Int) {
@@ -49,13 +45,7 @@ class SongListAdapter(var songList: MutableList<Song>) :
             txtListArtistName.text = song.artist
 
             itemView.setOnClickListener{
-                onSongClickListener?.invoke(song.title, song.artist, adapterPosition)
-            }
-
-            itemView.setOnLongClickListener{
-                onSongLongClickListener?.invoke(song.title, adapterPosition)
-                notifyDataSetChanged()
-                return@setOnLongClickListener true
+                onSongClickListener?.invoke(song)
             }
         }
     }
