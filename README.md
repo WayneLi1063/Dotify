@@ -2,13 +2,24 @@
 This is a basic Android App written in Kotlin for UW course INFO 448.
 Author: Wayne Li
 
+## Homework 3 – Fragments, Activity Lifecycle & Rotation
+
+Rewrote the app with a single activity and two different fragments acting as song list and player.  
+Deleted unused and extra credit features from previous homework.
+Added a landscape layout for the player.
+Ensured the data consistency after screen rotation and popping a fragment.
+
+Here is a preview of the hw3:
+
+![Homework 3 Preview](preview/preview_hw3.png)
+
 ## Homework 2 - Activities & RecyclerView
 
 Completed the song list screen with a miniplayer. Clicking the shuffle button will shuffle the list of songs.  
 Single clicking the song item will "play" it and display it on miniplayer.
 Clicking the miniplayer text area will display the song info in the music player screen, using the layouts defined in hw1.
 
-Here is the preview of the hw2:
+Here is a preview of the hw2:
 
 ![Homework 2 Preview](preview/preview_hw2.png)
 
@@ -22,7 +33,7 @@ Additionally, I implemented the following extra credit features:
 
 Completed the UI for music player screen as specified, for the base version, I used ConstraintLayout.
 
-Here is the preview of the hw1:
+Here is a preview of the hw1:
 
 ![Homework 1 Preview](preview/preview_hw1.png)
 
