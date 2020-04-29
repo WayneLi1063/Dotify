@@ -37,6 +37,7 @@ class NowPlayingFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         return layoutInflater.inflate(R.layout.fragment_now_playing, container,false)
     }
 
@@ -70,7 +71,7 @@ class NowPlayingFragment: Fragment() {
 
     }
 
-    fun updateSongInfo(song: Song) {
+    fun updateSong(song: Song) {
         txtSongTitle.text = song.title
         txtArtist.text = song.artist
         imgDivide.setImageResource(song.largeImageID)
@@ -78,7 +79,7 @@ class NowPlayingFragment: Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.run {
+        outState.run {
             putInt(STATE_PLAYS, randomNumber)
         }
     }

@@ -17,6 +17,7 @@ class SongListFragment: Fragment() {
     companion object {
         val TAG: String = SongListFragment::class.java.simpleName
         const val SONG_LIST_KEY = "song_list"
+        const val STATE_SONG_LIST = "parent_song_list"
     }
 
     private var onSongClickedListener: OnSongClickedListener? = null
@@ -34,8 +35,15 @@ class SongListFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        arguments?.let { args ->
-            parentSongList = args.getParcelableArrayList<Song>(SONG_LIST_KEY) as MutableList<Song>
+        if (savedInstanceState != null) {
+            with(savedInstanceState) {
+                parentSongList = getParcelableArrayList<Song>(STATE_SONG_LIST) as MutableList<Song>
+            }
+        } else {
+            arguments?.let { args ->
+                parentSongList =
+                    args.getParcelableArrayList<Song>(SONG_LIST_KEY) as MutableList<Song>
+            }
         }
 
         return layoutInflater.inflate(R.layout.fragment_song_list, container,false)
@@ -57,6 +65,12 @@ class SongListFragment: Fragment() {
         parentSongList.shuffle()
         val newSongList: MutableList<Song> = parentSongList
         songListAdapter.shuffle(newSongList)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putParcelableArrayList(STATE_SONG_LIST, parentSongList as ArrayList<Song>)
     }
 
 }

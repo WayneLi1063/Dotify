@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ericchee.songdataprovider.Song
 
-class SongListAdapter(var songList: MutableList<Song>) :
+class SongListAdapter(private var songList: MutableList<Song>) :
     RecyclerView.Adapter<SongListAdapter.SongListViewHolder>() {
 
     var onSongClickListener: ((song: Song) -> Unit)? = null
