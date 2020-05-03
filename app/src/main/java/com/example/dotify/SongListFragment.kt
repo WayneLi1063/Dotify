@@ -18,6 +18,14 @@ class SongListFragment: Fragment() {
         val TAG: String = SongListFragment::class.java.simpleName
         const val SONG_LIST_KEY = "song_list"
         const val STATE_SONG_LIST = "parent_song_list"
+
+        fun getInstance(songList: MutableList<Song>): SongListFragment {
+            return SongListFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelableArrayList(SONG_LIST_KEY, ArrayList(songList))
+                }
+            }
+        }
     }
 
     private var onSongClickedListener: OnSongClickedListener? = null

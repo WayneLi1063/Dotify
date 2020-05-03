@@ -29,11 +29,12 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener {
         } else {
             val songListFragment = SongListFragment()
 
-            val parentSongList = SongDataProvider.getAllSongs()
+            val parentSongList = ArrayList<Song>(SongDataProvider.getAllSongs())
+            val arraySongList = ArrayList<Song>(parentSongList)
             val songListBundle = Bundle().apply {
                 putParcelableArrayList(
                     SongListFragment.SONG_LIST_KEY,
-                    parentSongList as ArrayList<Song>
+                    arraySongList
                 )
             }
             songListFragment.arguments = songListBundle
@@ -97,7 +98,7 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener {
 
                 supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.fragContainer, nowPlayingFragment)
+                    .add(R.id.fragContainer, nowPlayingFragment, NowPlayingFragment.TAG)
                     .addToBackStack(NowPlayingFragment.TAG)
                     .commit()
             } else {
