@@ -1,13 +1,5 @@
 package com.example.dotify
 
-//        const val SONG_LIST_KEY = "song_list"
-//        fun getInstance(songList: MutableList<Song>): SongListFragment {
-//            return SongListFragment().apply {
-//                arguments = Bundle().apply {
-//                    putParcelableArrayList(SONG_LIST_KEY, ArrayList(songList))
-//                }
-//            }
-
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,9 +21,6 @@ class SongListFragment: Fragment() {
     companion object {
         val TAG: String = SongListFragment::class.java.simpleName
 
-//        const val STATE_SONG_LIST = "parent_song_list"
-
-        //        }
         fun getInstance(): SongListFragment {
             return SongListFragment()
         }
@@ -63,7 +52,7 @@ class SongListFragment: Fragment() {
 //                    args.getParcelableArrayList<Song>(SONG_LIST_KEY) as MutableList<Song>
 //            }
 //        }
-        fragmentSongList = application!!.parentSongList
+        fragmentSongList = application?.parentSongList ?: listOf<Song>() as MutableList<Song>
 
         return layoutInflater.inflate(R.layout.fragment_song_list, container,false)
     }
@@ -81,19 +70,14 @@ class SongListFragment: Fragment() {
     }
 
     fun shuffleList() {
-//        parentSongList.shuffle()
-//        val newSongList: MutableList<Song> = parentSongList
-        application!!.parentSongList.shuffle()
-        val newSongList = application!!.parentSongList
-        songListAdapter.shuffle(newSongList)
+        application?.let {
+            it.parentSongList.shuffle()
+        }
+        val newSongList = application?.parentSongList
+        if (newSongList != null) {
+            songListAdapter.shuffle(newSongList)
+        }
     }
-
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//
-//        outState.putParcelableArrayList(STATE_SONG_LIST, songList as ArrayList<Song>)
-//    }
-
 }
 
 interface OnSongClickedListener {

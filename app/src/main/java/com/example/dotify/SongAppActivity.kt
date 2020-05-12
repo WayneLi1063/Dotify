@@ -12,28 +12,12 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener
 
     private var application: SongApplication? = null
 
-//    private var currentSong: Song? = null
-//
-//    companion object {
-//        const val STATE_CUR_SONG = "current_song"
-//    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song_app)
 
         application = applicationContext as SongApplication
 
-//        if (savedInstanceState != null) {
-//            with(savedInstanceState) {
-//                currentSong = getParcelable(STATE_CUR_SONG)
-//                txtMiniPlayer.text = getString(R.string.miniPlayer).format(currentSong?.title, currentSong?.artist)
-//            }
-//        } else {
-//
-//            val parentSongList = ArrayList<Song>(SongDataProvider.getAllSongs())
-//
-//        }
         if (getSongListFragment() == null) {
             val songListFragment = SongListFragment.getInstance()
             supportFragmentManager
@@ -42,7 +26,7 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener
                 .commit()
 
         } else {
-            val currentSong = application!!.currentSong
+            val currentSong = application?.currentSong
             if (currentSong != null) {
                 txtMiniPlayer.text =
                     getString(R.string.miniPlayer).format(currentSong.title, currentSong.artist)
@@ -77,8 +61,8 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener
     }
 
     override fun onSongClicked(song: Song) {
-            txtMiniPlayer.text = getString(R.string.miniPlayer).format(song.title, song.artist)
-        application!!.currentSong = song
+        txtMiniPlayer.text = getString(R.string.miniPlayer).format(song.title, song.artist)
+        application?.currentSong = song
     }
 
     private fun getSongListFragment() =
@@ -88,7 +72,7 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener
         supportFragmentManager.findFragmentByTag(NowPlayingFragment.TAG) as? NowPlayingFragment
 
     private fun onMiniPlayClicked() {
-        val immutableCurSong = application!!.currentSong
+        val immutableCurSong = application?.currentSong
         if (immutableCurSong != null) {
             val nowPlayingFragmentRef = getNowPlayingFragment()
 
@@ -110,37 +94,39 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener
     }
 
     override fun onSkipPreviousListener(song: Song) {
-        val parentSongList = application!!.parentSongList
-        if (parentSongList.size == 1) {
-            Toast.makeText(this, "There is only one track on the list.", Toast.LENGTH_SHORT).show()
-            return
+        val parentSongList = application?.parentSongList
+        if (parentSongList != null) {
+            if (parentSongList.size == 1) {
+                Toast.makeText(this, "There is only one track on the list.", Toast.LENGTH_SHORT)
+                    .show()
+                return
+            }
+            var prevSongIndex = parentSongList.indexOf(song) - 1
+            if (prevSongIndex < 0) {
+                prevSongIndex = parentSongList.size - 1
+            }
+            val prevSong = parentSongList[prevSongIndex]
+            application?.currentSong = prevSong
+            getNowPlayingFragment()?.updateSong(prevSong)
         }
-        var prevSongIndex = parentSongList.indexOf(song) - 1
-        if (prevSongIndex < 0) {
-            prevSongIndex = parentSongList.size - 1
-        }
-        val prevSong = parentSongList[prevSongIndex]
-        application!!.currentSong = prevSong
-        getNowPlayingFragment()?.updateSong(prevSong)
     }
 
     override fun onSkipNextListener(song: Song) {
-        val parentSongList = application!!.parentSongList
-        if (parentSongList.size == 1) {
-            Toast.makeText(this, "There is only one track on the list.", Toast.LENGTH_SHORT).show()
-            return
+        val parentSongList = application?.parentSongList
+        if (parentSongList != null) {
+            if (parentSongList.size == 1) {
+                Toast.makeText(this, "There is only one track on the list.", Toast.LENGTH_SHORT)
+                    .show()
+                return
+            }
+            var nextSongIndex = parentSongList.indexOf(song) + 1
+            if (nextSongIndex >= parentSongList.size) {
+                nextSongIndex = 0
+            }
+            val nextSong = parentSongList[nextSongIndex]
+            application?.currentSong = nextSong
+            getNowPlayingFragment()?.updateSong(nextSong)
         }
-        var nextSongIndex = parentSongList.indexOf(song) + 1
-        if (nextSongIndex >= parentSongList.size) {
-            nextSongIndex = 0
-        }
-        val nextSong = parentSongList[nextSongIndex]
-        application!!.currentSong = nextSong
-        getNowPlayingFragment()?.updateSong(nextSong)
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putParcelable(STATE_CUR_SONG, currentSong)
-//    }
 }

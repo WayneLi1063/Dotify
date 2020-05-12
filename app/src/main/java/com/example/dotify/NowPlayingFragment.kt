@@ -20,16 +20,7 @@ class NowPlayingFragment: Fragment() {
 
     companion object {
         val TAG: String = NowPlayingFragment::class.java.simpleName
-        //        const val SONG_KEY = "song"
         const val STATE_PLAYS = "number_of_plays"
-
-//        fun getInstance(songToDisplay: Song): NowPlayingFragment {
-//            return NowPlayingFragment().apply {
-//                arguments = Bundle().apply {
-//                    putParcelable(SONG_KEY, songToDisplay)
-//                }
-//            }
-//        }
 
         fun getInstance(): NowPlayingFragment {
             return NowPlayingFragment()
@@ -72,7 +63,7 @@ class NowPlayingFragment: Fragment() {
 
         txtNumberPlays.text = getString(R.string.number_plays).format(randomNumber)
 
-        var song = application!!.currentSong
+        var song = application?.currentSong
 
         if (song != null) {
             txtSongTitle.text = song.title
@@ -80,20 +71,13 @@ class NowPlayingFragment: Fragment() {
             imgDivide.setImageResource(song.largeImageID)
         }
 
-//        arguments?.let { args ->
-//            val song = args.getParcelable<Song>(SONG_KEY)
-//            if (song != null) {
-//                txtSongTitle.text = song.title
-//                txtArtist.text = song.artist
-//                imgDivide.setImageResource(song.largeImageID)
-//            }
-//
-//        }
-
         imgPrev.setOnClickListener {
             if (song != null) {
-                skipListener?.onSkipPreviousListener(song!!)
-                song = application!!.currentSong
+                val immutableSong = song
+                if (immutableSong != null) {
+                    skipListener?.onSkipPreviousListener(immutableSong)
+                }
+                song = application?.currentSong
             }
         }
 
@@ -104,8 +88,11 @@ class NowPlayingFragment: Fragment() {
 
         imgNext.setOnClickListener {
             if (song != null) {
-                skipListener?.onSkipNextListener(song!!)
-                song = application!!.currentSong
+                val immutableSong = song
+                if (immutableSong != null) {
+                    skipListener?.onSkipNextListener(immutableSong)
+                }
+                song = application?.currentSong
             }
         }
 
