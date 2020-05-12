@@ -27,17 +27,10 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener {
                 txtMiniPlayer.text = getString(R.string.miniPlayer).format(currentSong?.title, currentSong?.artist)
             }
         } else {
-            val songListFragment = SongListFragment()
 
             val parentSongList = ArrayList<Song>(SongDataProvider.getAllSongs())
-            val arraySongList = ArrayList<Song>(parentSongList)
-            val songListBundle = Bundle().apply {
-                putParcelableArrayList(
-                    SongListFragment.SONG_LIST_KEY,
-                    arraySongList
-                )
-            }
-            songListFragment.arguments = songListBundle
+
+            val songListFragment = SongListFragment.getInstance(parentSongList)
             supportFragmentManager
                 .beginTransaction()
                 .add(R.id.fragContainer, songListFragment)
@@ -87,11 +80,7 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener {
             val nowPlayingFragmentRef = getNowPlayingFragment()
 
             if (nowPlayingFragmentRef == null) {
-                val nowPlayingFragment = NowPlayingFragment()
-                val nowPlayingBundle = Bundle().apply {
-                    putParcelable(NowPlayingFragment.SONG_KEY, immutableCurSong)
-                }
-                nowPlayingFragment.arguments = nowPlayingBundle
+                val nowPlayingFragment = NowPlayingFragment.getInstance(immutableCurSong)
 
                 miniPlayer.visibility = View.INVISIBLE
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
