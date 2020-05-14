@@ -1,7 +1,6 @@
 package com.example.dotify.activity
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -44,13 +43,13 @@ class UserInfoActivity : AppCompatActivity() {
             txtUserName.text = userInfo.username
             Picasso.get().load(userInfo.profilePicURL).error(R.drawable.ic_person_black_24dp)
                 .into(imgProfilePic)
-            txtFollowerCount.text = getString(R.string.follower).format(randomNumber)
             Toast.makeText(this, "Successfully fetched user info.", Toast.LENGTH_SHORT).show()
         }, {
             Toast.makeText(this, "Error occurred when fetching user info.", Toast.LENGTH_SHORT)
                 .show()
         })
 
+        txtFollowerCount.text = getString(R.string.follower).format(randomNumber)
         val currSong = musicManager.currentSong
         if (currSong != null) {
             imgUserSongPreview.setImageResource(currSong.largeImageID)
@@ -61,8 +60,8 @@ class UserInfoActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-        super.onSaveInstanceState(outState, outPersistentState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
 
         outState.run {
             putInt(STATE_FOLLOWER, randomNumber)
