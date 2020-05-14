@@ -2,6 +2,21 @@
 This is a basic Android App written in Kotlin for UW course INFO 448.
 Author: Wayne Li
 
+## Homework 4 – Application, JSON parsing & Network Requests
+
+Implemented an application class to hold consistent data across the entire app,
+also implemented MusicManager and ApiManager to make SongApplication cleaner.  
+MusicManager holds the current list of songs and the song currently playing,
+there is also skip previous and skip next functions that update and return currentSong.  
+Added a new activity called UserInfoActivity, which can be launched from NowPlayingFragment by clicking the USER INFO button.  
+It will fetch the user info from the designated JSON URL using Volley by calling ApiManager,
+and it will toast and tell users if the fetch succeeded or failed.  
+Picasso handles image fetching, and UserInfo is the data class that allows Gson to parse JSON into a data object.
+
+Here is a preview of what the UserInfoActivity looks like:
+
+![Homework 4 Preview](preview/preview_hw4.png)
+
 ## Homework 3 – Fragments, Activity Lifecycle & Rotation
 
 Rewrote the app with a single activity and two different fragments acting as song list and player.  

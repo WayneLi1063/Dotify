@@ -27,6 +27,8 @@ class UserInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_info)
 
+        title = "USER INFO"
+
         if (savedInstanceState != null) {
             with(savedInstanceState) {
                 randomNumber = getInt(STATE_FOLLOWER, Random.nextInt(2, 10000))
