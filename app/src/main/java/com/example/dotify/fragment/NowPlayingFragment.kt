@@ -1,12 +1,17 @@
-package com.example.dotify
+package com.example.dotify.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ericchee.songdataprovider.Song
+import com.example.dotify.R
+import com.example.dotify.SongApplication
+import com.example.dotify.activity.UserInfoActivity
+import com.example.dotify.manager.MusicManager
 import kotlinx.android.synthetic.main.fragment_now_playing.*
 import kotlin.random.Random
 
@@ -14,7 +19,7 @@ class NowPlayingFragment: Fragment() {
 
     private var randomNumber = -1
 
-    private var application: SongApplication? = null
+    private lateinit var musicManager: MusicManager
 
     private var skipListener: SkipListener? = null
 
@@ -30,7 +35,7 @@ class NowPlayingFragment: Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        application = context.applicationContext as SongApplication
+        musicManager = (context.applicationContext as SongApplication).musicManager
 
         if (context is SkipListener) {
             skipListener = context
@@ -63,7 +68,7 @@ class NowPlayingFragment: Fragment() {
 
         txtNumberPlays.text = getString(R.string.number_plays).format(randomNumber)
 
-        var song = application?.currentSong
+        var song = musicManager.currentSong
 
         if (song != null) {
             txtSongTitle.text = song.title
@@ -77,7 +82,7 @@ class NowPlayingFragment: Fragment() {
                 if (immutableSong != null) {
                     skipListener?.onSkipPreviousListener(immutableSong)
                 }
-                song = application?.currentSong
+                song = musicManager.currentSong
             }
         }
 
@@ -92,8 +97,13 @@ class NowPlayingFragment: Fragment() {
                 if (immutableSong != null) {
                     skipListener?.onSkipNextListener(immutableSong)
                 }
-                song = application?.currentSong
+                song = musicManager.currentSong
             }
+        }
+
+        btnUserInfo.setOnClickListener {
+            val intent = Intent(context, UserInfoActivity::class.java)
+            startActivity(intent)
         }
 
     }

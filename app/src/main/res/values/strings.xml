@@ -16,4 +16,9 @@
     <string name="apply">APPLY</string>
     <string name="miniPlayer">%s - %s</string>
     <string name="songRemoval">%s is removed.</string>
+    <string name="user_info">User Info</string>
+    <string name="user_profile_picture">User Profile Picture</string>
+    <string name="user_name_placeholder">User Name Placeholder</string>
+    <string name="currently_playing">Currently Playing:</string>
+    <string name="follower">%d Followers</string>
 </resources>

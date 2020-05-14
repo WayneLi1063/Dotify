@@ -1,4 +1,4 @@
-package com.example.dotify
+package com.example.dotify.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.ericchee.songdataprovider.Song
+import com.example.dotify.R
+import com.example.dotify.SongApplication
+import com.example.dotify.SongListAdapter
+import com.example.dotify.manager.MusicManager
 import kotlinx.android.synthetic.main.fragment_song_list.*
 
 class SongListFragment: Fragment() {
@@ -16,7 +20,7 @@ class SongListFragment: Fragment() {
 
     private var onSongClickedListener: OnSongClickedListener? = null
 
-    private var application: SongApplication? = null
+    private lateinit var musicManager: MusicManager
 
     companion object {
         val TAG: String = SongListFragment::class.java.simpleName
@@ -30,7 +34,7 @@ class SongListFragment: Fragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        application = context.applicationContext as SongApplication
+        musicManager = (context.applicationContext as SongApplication).musicManager
 
         if (context is OnSongClickedListener) {
             onSongClickedListener = context
@@ -42,17 +46,8 @@ class SongListFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        if (savedInstanceState != null) {
-//            with(savedInstanceState) {
-//                parentSongList = getParcelableArrayList<Song>(STATE_SONG_LIST) as MutableList<Song>
-//            }
-//        } else {
-//            arguments?.let { args ->
-//                parentSongList =
-//                    args.getParcelableArrayList<Song>(SONG_LIST_KEY) as MutableList<Song>
-//            }
-//        }
-        fragmentSongList = application?.parentSongList ?: listOf<Song>() as MutableList<Song>
+
+        fragmentSongList = musicManager.parentSongList
 
         return layoutInflater.inflate(R.layout.fragment_song_list, container,false)
     }
@@ -70,13 +65,9 @@ class SongListFragment: Fragment() {
     }
 
     fun shuffleList() {
-        application?.let {
-            it.parentSongList.shuffle()
-        }
-        val newSongList = application?.parentSongList
-        if (newSongList != null) {
-            songListAdapter.shuffle(newSongList)
-        }
+        musicManager.parentSongList.shuffle()
+        val newSongList = musicManager.parentSongList
+        songListAdapter.shuffle(newSongList)
     }
 }
 

@@ -1,19 +1,22 @@
 package com.example.dotify
 
 import android.app.Application
-import com.ericchee.songdataprovider.Song
-import com.ericchee.songdataprovider.SongDataProvider
-import java.util.*
+import com.example.dotify.manager.ApiManager
+import com.example.dotify.manager.MusicManager
 
 class SongApplication : Application() {
 
-    lateinit var parentSongList: MutableList<Song>
-    var currentSong: Song? = null
+
+    lateinit var musicManager: MusicManager
+    lateinit var apiManager: ApiManager
 
     override fun onCreate() {
         super.onCreate()
 
-        parentSongList = ArrayList(SongDataProvider.getAllSongs())
+        musicManager = MusicManager()
+        apiManager = ApiManager(this)
+
+
     }
 
 }

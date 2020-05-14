@@ -1,32 +1,44 @@
-package com.example.dotify
+package com.example.dotify.activity
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ericchee.songdataprovider.Song
+import com.example.dotify.R
+import com.example.dotify.SongApplication
+import com.example.dotify.fragment.NowPlayingFragment
+import com.example.dotify.fragment.OnSongClickedListener
+import com.example.dotify.fragment.SkipListener
+import com.example.dotify.fragment.SongListFragment
+import com.example.dotify.manager.MusicManager
 import kotlinx.android.synthetic.main.activity_song_app.*
 
 
-class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener {
+class SongAppActivity : AppCompatActivity(),
+    OnSongClickedListener,
+    SkipListener {
 
-    private var application: SongApplication? = null
+    private lateinit var musicManager: MusicManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_song_app)
 
-        application = applicationContext as SongApplication
+        musicManager = (applicationContext as SongApplication).musicManager
 
         if (getSongListFragment() == null) {
-            val songListFragment = SongListFragment.getInstance()
+            val songListFragment =
+                SongListFragment.getInstance()
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.fragContainer, songListFragment, SongListFragment.TAG)
+                .add(
+                    R.id.fragContainer, songListFragment,
+                    SongListFragment.TAG
+                )
                 .commit()
 
         } else {
-            val currentSong = application?.currentSong
+            val currentSong = musicManager.currentSong
             if (currentSong != null) {
                 txtMiniPlayer.text =
                     getString(R.string.miniPlayer).format(currentSong.title, currentSong.artist)
@@ -62,7 +74,7 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener
 
     override fun onSongClicked(song: Song) {
         txtMiniPlayer.text = getString(R.string.miniPlayer).format(song.title, song.artist)
-        application?.currentSong = song
+        musicManager.currentSong = song
     }
 
     private fun getSongListFragment() =
@@ -72,19 +84,23 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener
         supportFragmentManager.findFragmentByTag(NowPlayingFragment.TAG) as? NowPlayingFragment
 
     private fun onMiniPlayClicked() {
-        val immutableCurSong = application?.currentSong
+        val immutableCurSong = musicManager.currentSong
         if (immutableCurSong != null) {
             val nowPlayingFragmentRef = getNowPlayingFragment()
 
             if (nowPlayingFragmentRef == null) {
-                val nowPlayingFragment = NowPlayingFragment.getInstance()
+                val nowPlayingFragment =
+                    NowPlayingFragment.getInstance()
 
                 miniPlayer.visibility = View.GONE
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
                 supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.fragContainer, nowPlayingFragment, NowPlayingFragment.TAG)
+                    .add(
+                        R.id.fragContainer, nowPlayingFragment,
+                        NowPlayingFragment.TAG
+                    )
                     .addToBackStack(NowPlayingFragment.TAG)
                     .commit()
             } else {
@@ -94,37 +110,15 @@ class SongAppActivity : AppCompatActivity(), OnSongClickedListener, SkipListener
     }
 
     override fun onSkipPreviousListener(song: Song) {
-        val parentSongList = application?.parentSongList
-        if (parentSongList != null) {
-            if (parentSongList.size == 1) {
-                Toast.makeText(this, "There is only one track on the list.", Toast.LENGTH_SHORT)
-                    .show()
-                return
-            }
-            var prevSongIndex = parentSongList.indexOf(song) - 1
-            if (prevSongIndex < 0) {
-                prevSongIndex = parentSongList.size - 1
-            }
-            val prevSong = parentSongList[prevSongIndex]
-            application?.currentSong = prevSong
+        val prevSong = musicManager.prevSong(this)
+        if (prevSong != null) {
             getNowPlayingFragment()?.updateSong(prevSong)
         }
     }
 
     override fun onSkipNextListener(song: Song) {
-        val parentSongList = application?.parentSongList
-        if (parentSongList != null) {
-            if (parentSongList.size == 1) {
-                Toast.makeText(this, "There is only one track on the list.", Toast.LENGTH_SHORT)
-                    .show()
-                return
-            }
-            var nextSongIndex = parentSongList.indexOf(song) + 1
-            if (nextSongIndex >= parentSongList.size) {
-                nextSongIndex = 0
-            }
-            val nextSong = parentSongList[nextSongIndex]
-            application?.currentSong = nextSong
+        val nextSong = musicManager.nextSong(this)
+        if (nextSong != null) {
             getNowPlayingFragment()?.updateSong(nextSong)
         }
     }
